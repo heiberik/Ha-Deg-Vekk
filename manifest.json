@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+
+    "name": "Fjern Nyheter",
+    "description": "Lei av spoilers? Fjern nyhetsartikler som inneholder selvvalgte nøkkelord!",
+    "version": "0.1",
+
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+     },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["innhold.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["bakgrunn.js"]
+    },
+
+    "permissions": [
+        "activeTab"
+   ]
+}
