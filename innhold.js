@@ -5,30 +5,35 @@ var blank = false
 
 
 // INIT: Henter all nødvendig data fra chrome storage.
-chrome.storage.sync.get(['gjemHele'], function(result) {
-    gjemHele = result.gjemHele
-    if (!gjemHele) {
-        chrome.storage.sync.set({"gjemHele": false})
-        gjemHele = false;
-    }
-});
+const init = () => {
+    console.log("INNHOLD INIT")
+    chrome.storage.sync.get(['gjemHele'], function(result) {
+        gjemHele = result.gjemHele
+        if (!gjemHele) {
+            chrome.storage.sync.set({"gjemHele": false})
+            gjemHele = false;
+        }
+    });
 
-chrome.storage.sync.get(['blankStartup'], function(result) {
-    blank = result.blankStartup
-    if (!blank) {
-        chrome.storage.sync.set({"blankStartup": false})
-        blank = false;
-    }
-});
+    chrome.storage.sync.get(['blankStartup'], function(result) {
+        blank = result.blankStartup
+        if (!blank) {
+            chrome.storage.sync.set({"blankStartup": false})
+            blank = false;
+        }
+    });
 
-chrome.storage.sync.get(['ordListe'], function(result) {
-    ord = result.ordListe
-    if (!ord) {
-        chrome.storage.sync.set({"ordListe": []})
-        ord = []
-    }
-    fjern()
-});
+    chrome.storage.sync.get(['ordListe'], function(result) {
+        ord = result.ordListe
+        console.log(ord)
+        if (!ord) {
+            chrome.storage.sync.set({"ordListe": []})
+            ord = []
+        }
+        fjern()
+    });
+}
+init()
 
 
 
@@ -38,7 +43,15 @@ chrome.storage.sync.get(['ordListe'], function(result) {
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
         if (request.melding == "init"){
-            sendResponse({liste: ord, gjemHele: gjemHele, url: url, blank: blank})
+
+            chrome.storage.sync.get(null, function(items) {
+                var allVals= Object.values(items);
+                ord = allVals[2]
+                gjemHele = allVals[1]
+                blank = allVals[0]
+                sendResponse({liste: allVals[2], gjemHele: allVals[1], url: url, blank: allVals[0]})
+                fjern()
+            });
         }
         return true;
 });
@@ -100,8 +113,6 @@ chrome.runtime.onMessage.addListener(
 // Metode som går igjennom nyhetssiden og filterer vekk uønsket innhold.
 // Kalles etter hver forandring i listen over uønskede ord/setninger.
 const fjern = () => {
-
-    console.log(url)
     if (url.indexOf("vg.no/") != -1) fjernVG()
 }
 

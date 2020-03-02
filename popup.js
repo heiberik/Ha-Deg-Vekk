@@ -21,103 +21,117 @@ window.addEventListener('DOMContentLoaded', () => {
     var sjekkSide = 0;
 
 
-    //chrome.tabs.reload();
+    function learnRegExp(s) {
+        var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+        return regexp.test(s);
+    }
 
-    // INIT!
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id,
-            {melding: "init"}, (resp) => {
-                console.log("init begynner")
-                console.log(resp.liste)
-                console.log(resp.gjemHele)
-                console.log(resp.blank)
-                oppdaterListe(resp.liste)
-                oppdaterGjemHele(resp.gjemHele)
-                oppdaterBlankStartup(resp.blank)
-                console.log("init ferdig")
-            }
-        )
-    })
-
-
-    listeKnapp.addEventListener('click', () => {
-        if (sjekkSide === 0 || sjekkSide === 2){
-            if (liste.childNodes.length > 0){
-                liste.style = "display: block"
-                tomListe.style = "display: none"
-                sjekkSide = 1
-            } else {
-                tomListe.style = "display: block"
-                liste.style = "display: none"
-                sjekkSide = 3
-            }
-            innstBoks.style = "display: none"
-        }
-        else {
-            innstBoks.style = "display: none"
-            liste.style = "display: none"
-            tomListe.style = "display: none"
-            sjekkSide = 0
+    // Sjekker om URL er gyldig. ellers blir det bare tull og tøys.
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (learnRegExp(tabs[0].url)){
+            init()
+        } else {
+            tittel.innerHTML = "Ugyldig nettside (URL)"
         }
     })
 
-    innstKnapp.addEventListener('click', () => {
-        if (sjekkSide != 2){
-            liste.style = "display: none"
-            tomListe.style = "display: none"
-            innstBoks.style = "display: block"
-            sjekkSide = 2
-        }
-        else {
-            innstBoks.style = "display: none"
-            liste.style = "display: none"
-            tomListe.style = "display: none"
-            sjekkSide = 0
-        }
-    })
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (input.value === "") return
+    // metode for å initialisere!
+    const init = () => {
+
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id,
-                {melding: "leggTil", tekst: input.value}, (resp) => {
-
-                    input.value = "";
-                    console.log(resp.liste)
+                {melding: "init"}, (resp) => {
+                    console.log("init begynner")
                     oppdaterListe(resp.liste)
-                    if (sjekkSide === 3){
-                        tomListe.style = "display: none"
-                        liste.style = "display: block"
-                        sjekkSide = 1
+                    oppdaterGjemHele(resp.gjemHele)
+                    oppdaterBlankStartup(resp.blank)
+                    console.log("init ferdig")
+                }
+            )
+        })
+
+
+        listeKnapp.addEventListener('click', () => {
+            if (sjekkSide === 0 || sjekkSide === 2){
+                if (liste.childNodes.length > 0){
+                    liste.style = "display: block"
+                    tomListe.style = "display: none"
+                    sjekkSide = 1
+                } else {
+                    tomListe.style = "display: block"
+                    liste.style = "display: none"
+                    sjekkSide = 3
+                }
+                innstBoks.style = "display: none"
+            }
+            else {
+                innstBoks.style = "display: none"
+                liste.style = "display: none"
+                tomListe.style = "display: none"
+                sjekkSide = 0
+            }
+        })
+
+        innstKnapp.addEventListener('click', () => {
+            if (sjekkSide != 2){
+                liste.style = "display: none"
+                tomListe.style = "display: none"
+                innstBoks.style = "display: block"
+                sjekkSide = 2
+            }
+            else {
+                innstBoks.style = "display: none"
+                liste.style = "display: none"
+                tomListe.style = "display: none"
+                sjekkSide = 0
+            }
+        })
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (input.value === "") return
+            chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id,
+                    {melding: "leggTil", tekst: input.value}, (resp) => {
+
+                        input.value = "";
+                        console.log(resp.liste)
+                        oppdaterListe(resp.liste)
+                        if (sjekkSide === 3){
+                            tomListe.style = "display: none"
+                            liste.style = "display: block"
+                            sjekkSide = 1
+                        }
                     }
-                }
-            )
+                )
+            })
         })
-    })
 
 
-    gjemHele.addEventListener('change', () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id,
-                {melding: "gjemHele", tekst: gjemHele.checked}, (resp) => {
+        gjemHele.addEventListener('change', () => {
+            chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id,
+                    {melding: "gjemHele", tekst: gjemHele.checked}, (resp) => {
 
-                    //console.log("FIKK SVAR!")
-                }
-            )
+                        //console.log("FIKK SVAR!")
+                    }
+                )
+            })
         })
-    })
 
-    blankStartup.addEventListener('change', () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id,
-                {melding: "blankStartup", tekst: blankStartup.checked}, (resp) => {
+        blankStartup.addEventListener('change', () => {
+            chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id,
+                    {melding: "blankStartup", tekst: blankStartup.checked}, (resp) => {
 
-                    //console.log("FIKK SVAR HEHE!")
-                }
-            )
+                        //console.log("FIKK SVAR HEHE!")
+                    }
+                )
+            })
         })
-    })
+    }
+
 
 
     const oppdaterListe = (l) => {
