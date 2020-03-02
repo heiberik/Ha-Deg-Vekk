@@ -1,10 +1,8 @@
 {
     "manifest_version": 2,
-
-    "name": "Fjern Nyheter",
-    "description": "Lei av spoilers? Fjern nyhetsartikler som inneholder selvvalgte nøkkelord!",
-    "version": "0.1",
-
+    "name": "Ha deg vekk!",
+    "description": "Lei av å se nyhetsartikler om coronaviruset? Irriterer det deg å få spoilet siste episode av tangerudbakken? Med Ha Deg Vekk kan du enkelt filtrere vekk uønsket innhold.",
+    "version": "0.2",
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup.html"
@@ -13,14 +11,21 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["innhold.js"]
+            "css": ["styles.css"],
+            "js": ["startup.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "css": ["styles.css"],
+            "js": ["innhold.js"],
+            "run_at": "document_end"
         }
     ],
-    "background": {
-        "scripts": ["bakgrunn.js"]
-    },
 
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "storage",
+        "tabs"
    ]
 }

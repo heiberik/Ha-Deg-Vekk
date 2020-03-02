@@ -1,0 +1,166 @@
+:root {
+    --bakgrunn: pink;
+    --tekstFarge: red;
+    --borderFarge: orange;
+}
+
+body {
+    background-color: rgba(255, 0, 0, 0.02);
+}
+
+.popup {
+    width: 300px;
+    height: auto;
+
+}
+
+.artikkelHel {
+    filter: brightness(0%) !important;
+    background: var(--bakgrunn) !important;
+    color: var(--tekstFarge) !important;
+    pointer-events: none !important;
+}
+
+.gjemHele {
+    display: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.LeggTil {
+    padding: 0px;
+}
+
+.tittel {
+    text-align: center;
+    font-size: 17px;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    margin: 0px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.popup form {
+    margin: auto;
+    text-align: center;
+}
+
+.popup input {
+    padding: 1px;
+}
+
+.popup button {
+    padding: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: rgba(0, 0, 0, 0.4);
+    border: none;
+    font-weight: 600;
+    border: solid 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+
+.valg {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.valg p {
+    margin: 2px;
+    padding-left: 2px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.listeFlex {
+    display: flex;
+    justify-content: center;
+}
+
+.listeFlex a{
+    text-align: center;
+    margin: 10px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.popup img {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.listeFlex img{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    margin: 0px;
+}
+
+.boksFjern {
+    margin: 0px;
+    margin-top: 10px;
+    list-style: none;
+    padding: 0px;
+    background-color: white;
+    border-radius: 5px;
+    border-top: solid rgba(0, 0, 0, 0.2) 1px;
+}
+
+.labelOgInput {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    padding-left: 20px;
+}
+
+.labelOgInput:first-of-type {
+    padding-top: 15px;
+}
+
+.boksFjern label {
+    margin-bottom: 5px;
+    margin-left: 2px;
+    font-size: 16px;
+    font-weight: 500;
+    font-variant: small-caps;
+}
+
+.boksFjern p {
+    margin: 0px;
+    padding: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 14px;
+}
+
+
+.boksFjern li:first-of-type {
+
+    padding-top: 15px;
+}
+
+.boksFjern li:last-of-type {
+    padding-bottom: 15px;
+}
+
+.boksFjern li {
+    cursor: pointer;
+    padding: 2px;
+    margin-top: 2px;
+    text-align: center;
+    font-size: 16px;
+
+}
+
+.gjem {
+    display: none;
+    background-color: black;
+}

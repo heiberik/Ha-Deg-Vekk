@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Fjern Nyheter</title>
+        <script src="popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
 
-      
+    <body>
 
-  </body>
+        <div class="popup">
+            <div class="LeggTil">
+                <div class="valg">
+                    <p>v1.0</p>
+                    <a id="innstillingerA">
+                        <img src="bilder/settings.svg" alt="innstillinger">
+                    </a>
+                </div>
+                <h2 class="tittel"> Hvilke nyhetsartikler ønsker du å filtrere vekk? </h2>
+                <form id="form">
+                    <input type="text" id="input" autocomplete="off" placeholder="">
+                    <button type="submit">vekk!</button>
+                </form>
+            </div>
+
+            <div class="listeFlex">
+                <a id="listeA">
+                    <img src="bilder/list.svg" alt="liste">
+                </a>
+            </div>
+
+
+
+            <div class="boksFjern" id="innstillinger_boks">
+
+                <div class="labelOgInput">
+                    <input type="checkbox" id="gjemHele" name="gjemHele" value="">
+                    <label for="slettAlt"> fjern hele artikkelen! </label><br>
+                </div>
+                <div class="labelOgInput">
+                    <input type="checkbox" id="blankStartup" name="blankStartup" value="">
+                    <label for="blankStartup"> ekstra spoilersikkerhet! </label><br>
+                </div>
+                <p>
+                    Du kan se listen over uønskede ord/setninger ved å trykke på
+                    listeikonet. Trykk på et element for å fjerne det fra listen.
+                    'Ekstra spoilersikkerhet' viser en blank side mens siden laster inn.
+                    'Fjern hele artikkelen' kan føre til rare nyhetssider.
+                </p>
+            </div>
+
+            <div class="boksFjern" id="tomListe">
+                <p>
+                    Listen er tom. Du kan legge til ord eller setninger ved å skrive de
+                    inn i boksen over og klikke på "vekk!".
+                </p>
+            </div>
+
+            <ul class="boksFjern" id="listeOrd"></ul>
+
+        </div>
+    </body>
 </html>
