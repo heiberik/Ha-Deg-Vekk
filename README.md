@@ -1,1 +1,3 @@
-"# fjern-nyheter" 
+# fjern-nyheter
+
+Applikasjon for filtrering av uønsket nyhetsinnhold.
